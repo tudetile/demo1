@@ -1,3 +1,9 @@
+/*
+demo1
+Demo code for 3x3 RGB LED matrix driven by IS32FL3237 LED driver and Adafruit-Trinket-5V AVR board with ATtiny85 microcontroller.
+When using MS VS Code IDE, please make sure you add "upload_flags = -e" in the platformio.ini file for proper erasing before upload. Otherwise you might get a verification mismatch error and damage the bootloader.
+*/
+
 #include <arduino.h>
 #include <TinyWireM.h>
 #include <avr/pgmspace.h>
@@ -45,9 +51,9 @@ void IS_I2C_WriteByte(uint8_t Dev_Add,uint8_t Reg_Add,uint8_t Reg_Dat){
   TinyWireM.endTransmission(); // stop transmission
 }
 
-// Initialize IS31FL3237 LED driver
+// Initialize IS32FL3237 LED driver
 
-void Init_IS31FL3237(void){
+void Init_IS32FL3237(void){
   uint8_t i=0;
   for(i=0x4A; i<=0x6D; i++){
     IS_I2C_WriteByte(Addr_GND,i,0xFF); // write to all SL scaling registers 
@@ -243,11 +249,11 @@ void Stick_Rotation_Function(void){
 
 void setup() {
   // put your setup code here, to run once:
-  TinyWireM.begin(); // setup I2C communication on ATtiny85 microcontroller
-  pinMode(1, OUTPUT); // define SDB output on on ATtiny85 microcontroller
-  digitalWrite(1, HIGH); // SDB_HIGH, enable IS31FL3237
+  TinyWireM.begin(); // setup I2C communication on Adafruit-Trinket-5V with ATtiny85 microcontroller
+  pinMode(1, OUTPUT); // define SDB output on Adafruit-Trinket-5V with ATtiny85 microcontroller
+  digitalWrite(1, HIGH); // SDB_HIGH, enable IS32FL3237
   delay(100); // wait 100ms
-  Init_IS31FL3237(); // initialize IS31FL3237
+  Init_IS32FL3237(); // initialize IS32FL3237
 }
 
 void loop() {
@@ -256,7 +262,7 @@ void loop() {
   {
   case Enum_LED_Mode::White_Breath:
     White_Breath_Function();
-    LED_Mode = Enum_LED_Mode:: Sequential_RGB_Rise;
+    LED_Mode = Enum_LED_Mode::Sequential_RGB_Rise;
     break;
 
   case Enum_LED_Mode::Sequential_RGB_Rise:
