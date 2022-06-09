@@ -8,9 +8,7 @@ When using MS VS Code IDE, please make sure you add "upload_flags = -e" in the p
 #include <TinyWireM.h>
 #include <avr/pgmspace.h>
 #define Addr_GND 0x68
-//7 bit format is 0x34
-
-//uint8_t i=0; // global counter variable, uncomment when using in loop() function
+// The slave address is 7 bit format, so that Addr_GND corresponds to 0x34 when beginning transmission
 
 byte PWM_64[64] =
 {
@@ -178,12 +176,12 @@ void Toggle_Color_Cross_And_Corner_Function(void){
 }
 
 void Walking_LED_Function(void){
-  uint8_t i=0, Delay_Value=50, Max_PWM_Value=63;
+  uint8_t i=0, Delay_Value=50;
   Update_All_PWM(PWM_64[0]);
   for(i=0; i<9; i++){
-    Update_PWM(Red_LED[i], PWM_64[Max_PWM_Value]); // walking orange dot
-    Update_PWM(Green_LED[i], PWM_64[22]);
-    Update_PWM(Blue_LED[i], PWM_64[0]);
+    Update_PWM(Red_LED[i], PWM_64[63]); // 63
+    Update_PWM(Green_LED[i], PWM_64[22]); // 22
+    Update_PWM(Blue_LED[i], PWM_64[0]); // 0, walking orange dot
     delay(Delay_Value);
     Update_All_PWM(PWM_64[0]);
   }
